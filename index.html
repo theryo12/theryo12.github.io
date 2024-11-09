@@ -95,12 +95,12 @@
             ctx.fillStyle = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
 
             // Рисуем плавно меняющийся абстрактный фон
-            ctx.globalAlpha = 0.2; // Сделаем его полупрозрачным, чтобы не было резких фигур
+            ctx.globalAlpha = 0.1; // Сделаем его полупрозрачным для мягкости
             ctx.beginPath();
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 5; i++) { // Меньше кругов для более плавного эффекта
                 let x = Math.random() * canvas.width;
                 let y = Math.random() * canvas.height;
-                let radius = Math.random() * 300 + 150; // Больше радиус для плавных переходов
+                let radius = Math.random() * 500 + 200; // Больше радиус для мягкости
                 ctx.arc(x, y, radius, 0, Math.PI * 2);
             }
             ctx.fill();

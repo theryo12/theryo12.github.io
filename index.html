@@ -7,9 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background-color: #1e1e2e;
-            --primary-color: #4a90e2;
-            --text-color: #dcdcdc;
+            --background-color: #1e1e2e; /* Темный фон */
+            --primary-color: #4a90e2; /* Голубой */
+            --text-color: #dcdcdc; /* Светлый текст */
             --font-primary: 'Roboto', sans-serif;
             --font-heading: 'Poppins', sans-serif;
         }
@@ -19,12 +19,12 @@
             padding: 0;
             font-family: var(--font-primary);
             color: var(--text-color);
+            background-color: var(--background-color); /* Убираем белый фон */
             overflow: hidden;
             position: relative;
-            height: 100vh; /* Обеспечим, что body всегда будет по высоте */
+            height: 100vh;
         }
 
-        /* Панель с эффектом Vibrancy */
         .vibrant-panel {
             background: rgba(0, 0, 0, 0.5); /* Полупрозрачный чёрный фон */
             backdrop-filter: blur(10px); /* Эффект размытия фона за панелью */
@@ -52,7 +52,6 @@
             color: var(--text-color);
         }
 
-        /* Canvas для анимации абстрактного фона */
         #backgroundCanvas {
             position: absolute;
             top: 0;
@@ -71,41 +70,35 @@
     </div>
 
     <script>
-        // Получаем элемент canvas и его контекст
         const canvas = document.getElementById('backgroundCanvas');
         const ctx = canvas.getContext('2d');
         
-        // Устанавливаем размеры канваса
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         // Функция для создания случайных абстрактных фигур
         function createAbstractShape() {
-            const x = Math.random() * canvas.width; // Случайная позиция по оси X
-            const y = Math.random() * canvas.height; // Случайная позиция по оси Y
-            const size = Math.random() * 100 + 50; // Случайный размер
-            const opacity = Math.random() * 0.3 + 0.2; // Случайная прозрачность
-            const color = `rgba(0, 0, ${Math.random() * 255}, ${opacity})`; // Случайный синий цвет с прозрачностью
+            const x = Math.random() * canvas.width;
+            const y = Math.random() * canvas.height;
+            const size = Math.random() * 50 + 20; // Меньше, чтобы не было слишком крупных объектов
+            const opacity = Math.random() * 0.3 + 0.1; // Меньше прозрачности
+            const color = `rgba(100, 100, ${Math.random() * 150 + 100}, ${opacity})`; // Меньше контраста, более мягкие цвета
 
             return { x, y, size, color };
         }
 
-        // Массив для хранения абстрактных фигур
         const shapes = [];
-
-        // Генерация начальных абстрактных фигур
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 50; i++) { // Больше фигур, чтобы не было чётких очертаний
             shapes.push(createAbstractShape());
         }
 
-        // Функция для анимации
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем канвас
 
-            // Перебираем каждую фигуру и обновляем её положение
+            // Обновляем и рисуем фигуры
             shapes.forEach(shape => {
-                const distortion = Math.sin(Date.now() * 0.002 + shape.x) * 10;
-                const sizeChange = Math.sin(Date.now() * 0.001 + shape.y) * 15;
+                const distortion = Math.sin(Date.now() * 0.002 + shape.x) * 20;
+                const sizeChange = Math.sin(Date.now() * 0.001 + shape.y) * 10;
 
                 ctx.beginPath();
                 ctx.arc(shape.x + distortion, shape.y + distortion, shape.size + sizeChange, 0, Math.PI * 2);
@@ -113,11 +106,9 @@
                 ctx.fill();
             });
 
-            // Рекурсивный вызов анимации
             requestAnimationFrame(animate);
         }
 
-        // Запуск анимации
         animate();
     </script>
 </body>

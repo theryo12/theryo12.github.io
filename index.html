@@ -7,111 +7,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background-color: #1e1e2e; /* Темный фон */
-            --primary-color: #4a90e2; /* Голубой */
-            --text-color: #dcdcdc; /* Светлый текст */
+            --background-color: #1e1e2e;
+            --primary-color: #4a90e2;
+            --text-color: #dcdcdc;
+            
+            /* Переменные для шрифтов */
             --font-primary: 'Roboto', sans-serif;
             --font-heading: 'Poppins', sans-serif;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-primary);
-            color: var(--text-color);
-            background-color: var(--background-color);
-            overflow: hidden;
-            position: relative;
-            height: 100vh;
-        }
-
-        .vibrant-panel {
-            background: rgba(0, 0, 0, 0.5); /* Полупрозрачный чёрный фон */
-            backdrop-filter: blur(10px); /* Эффект размытия фона за панелью */
-            -webkit-backdrop-filter: blur(10px); /* Для совместимости с Safari */
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); /* Тень */
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-            z-index: 1;
-            position: relative;
-        }
-
         h1 {
             font-family: var(--font-heading);
-            font-weight: 600;
             font-size: 3rem;
+            font-weight: 600;
             color: var(--primary-color);
-            margin: 0;
-        }
-
-        p {
-            font-size: 1.2rem;
-            color: var(--text-color);
-        }
-
-        #backgroundCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
         }
     </style>
 </head>
 <body>
-    <canvas id="backgroundCanvas"></canvas>
-    <div class="vibrant-panel">
+    <div>
         <h1>QUANTUM</h1>
-        <p>:) ждите.</p>
     </div>
-
-    <script>
-        const canvas = document.getElementById('backgroundCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let color1 = [36, 52, 106]; // темный синий
-        let color2 = [46, 73, 124]; // синий средний
-
-        // Функция для плавных переходов цветов
-        function interpolateColor(color1, color2, factor) {
-            return color1.map((value, index) => Math.round(value + (color2[index] - value) * factor));
-        }
-
-        // Функция для создания абстрактных плавных переходов
-        function createAbstractBackground() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем канвас
-
-            // Получаем текущие цвета с плавным переходом
-            const factor = (Math.sin(Date.now() / 2000) + 1) / 2; // Плавное изменение цвета
-            const currentColor = interpolateColor(color1, color2, factor);
-
-            ctx.fillStyle = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
-
-            // Рисуем плавно меняющийся абстрактный фон
-            ctx.globalAlpha = 0.1; // Сделаем его полупрозрачным для мягкости
-            ctx.beginPath();
-            for (let i = 0; i < 5; i++) { // Меньше кругов для более плавного эффекта
-                let x = Math.random() * canvas.width;
-                let y = Math.random() * canvas.height;
-                let radius = Math.random() * 500 + 200; // Больше радиус для мягкости
-                ctx.arc(x, y, radius, 0, Math.PI * 2);
-            }
-            ctx.fill();
-        }
-
-        function animate() {
-            createAbstractBackground();
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-    </script>
 </body>
 </html>

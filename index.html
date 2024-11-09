@@ -8,10 +8,10 @@
     <style>
         :root {
             --background-color: #1e1e2e;
-            --primary-color: #4a90e2; 
-            --text-color: #dcdcdc; 
+            --primary-color: #4a90e2;
+            --text-color: #dcdcdc;
             
-            --font-primary: 'Roboto', sans-serif; 
+            --font-primary: 'Roboto', sans-serif;
             --font-heading: 'Poppins', sans-serif; 
         }
 
@@ -19,12 +19,13 @@
         body {
             background-color: var(--background-color);
             color: var(--text-color);
-            font-family: var(--font-primary); 
+            font-family: var(--font-primary);
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             min-height: 100vh;
         }
 
@@ -40,9 +41,37 @@
             line-height: 1.5;
             color: var(--text-color);
         }
+
+        .ryo-container {
+            position: absolute;
+            top: 20%;
+            width: 100%;
+            text-align: center;
+            z-index: 1; 
+        }
+
+        .ryo-text {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .separator {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
+    <div class="ryo-container">
+        <div class="ryo-text">RYO</div>
+    </div>
+    
+    <div class="separator"></div>
+
     <div>
         <h1>Добро пожаловать на мой сайт!</h1>
         <p>Это пример сайта с тёмной темой и современными шрифтами, использующими переменные.</p>

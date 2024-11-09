@@ -21,6 +21,7 @@
             color: var(--text-color);
             overflow: hidden;
             position: relative;
+            height: 100vh; /* Обеспечим, что body всегда будет по высоте */
         }
 
         /* Панель с эффектом Vibrancy */
@@ -78,48 +79,38 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Функция для создания случайных кругов
-        function createCircle() {
-            const radius = Math.random() * 50 + 30; // Случайный радиус
+        // Функция для создания случайных абстрактных фигур
+        function createAbstractShape() {
             const x = Math.random() * canvas.width; // Случайная позиция по оси X
             const y = Math.random() * canvas.height; // Случайная позиция по оси Y
-            const dx = Math.random() * 0.5 - 0.25; // Случайная скорость по оси X
-            const dy = Math.random() * 0.5 - 0.25; // Случайная скорость по оси Y
-            const color = `rgba(0, 0, ${Math.random() * 255}, ${Math.random() * 0.5 + 0.3})`; // Случайный синий цвет с прозрачностью
+            const size = Math.random() * 100 + 50; // Случайный размер
+            const opacity = Math.random() * 0.3 + 0.2; // Случайная прозрачность
+            const color = `rgba(0, 0, ${Math.random() * 255}, ${opacity})`; // Случайный синий цвет с прозрачностью
 
-            return { x, y, radius, dx, dy, color };
+            return { x, y, size, color };
         }
 
-        // Массив для хранения всех кругов
-        const circles = [];
+        // Массив для хранения абстрактных фигур
+        const shapes = [];
 
-        // Генерация начальных кругов
+        // Генерация начальных абстрактных фигур
         for (let i = 0; i < 30; i++) {
-            circles.push(createCircle());
+            shapes.push(createAbstractShape());
         }
 
         // Функция для анимации
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем канвас
 
-            // Перебираем каждый круг и обновляем его положение
-            circles.forEach(circle => {
+            // Перебираем каждую фигуру и обновляем её положение
+            shapes.forEach(shape => {
+                const distortion = Math.sin(Date.now() * 0.002 + shape.x) * 10;
+                const sizeChange = Math.sin(Date.now() * 0.001 + shape.y) * 15;
+
                 ctx.beginPath();
-                ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
-                ctx.fillStyle = circle.color;
+                ctx.arc(shape.x + distortion, shape.y + distortion, shape.size + sizeChange, 0, Math.PI * 2);
+                ctx.fillStyle = shape.color;
                 ctx.fill();
-
-                // Двигаем круги
-                circle.x += circle.dx;
-                circle.y += circle.dy;
-
-                // Если круг выходит за пределы, меняем его направление
-                if (circle.x + circle.radius > canvas.width || circle.x - circle.radius < 0) {
-                    circle.dx = -circle.dx;
-                }
-                if (circle.y + circle.radius > canvas.height || circle.y - circle.radius < 0) {
-                    circle.dy = -circle.dy;
-                }
             });
 
             // Рекурсивный вызов анимации

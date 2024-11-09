@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devlogs - Ryo</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Global Styles */
+        body {
+            background-color: #0D1117;
+            color: #C9D1D9;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+                /* Navigation Bar */
+                .navbar {
+            background-color: #161b22;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 2rem; /* Space between elements */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+            transition: transform 0.4s ease;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .navbar .logo {
+            font-size: 1.6rem;
+            color: #58A6FF;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-right: auto; /* Keeps logo on the left */
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            margin-right: 3rem;
+        }
+
+        .navbar li {
+            position: relative;
+        }
+
+        .navbar a {
+            color: #C9D1D9;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .navbar a:hover {
+            color: #58A6FF;
+        }
+
+        /* Dropdown Menu */
+        .navbar .dropdown {
+            position: relative;
+        }
+
+        .navbar .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #21262d;
+            border-radius: 6px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            z-index: 1;
+            animation: fadeInDropdown 0.3s ease forwards;
+        }
+
+        .navbar .dropdown-content a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            color: #C9D1D9;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .dropdown-content a:hover {
+            background-color: #58A6FF;
+            color: white;
+        }
+
+        /* Show Dropdown on Hover */
+        .navbar .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Contact Dropdown */
+        .contact-dropdown {
+            position: relative;
+        }
+
+        .contact-dropdown .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: -90px;
+            background-color: #21262d;
+            border-radius: 6px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .contact-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Contact Info Styles */
+        .contact-dropdown .dropdown-content div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            color: #C9D1D9;
+            font-size: 1rem;
+        }
+
+        /* Link in contact dropdown */
+        .contact-dropdown .dropdown-content a {
+            text-decoration: none;
+            color: #C9D1D9;
+            font-weight: 500;
+        }
+
+        .contact-dropdown .dropdown-content a:hover {
+            color: #58A6FF;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 3rem;
+            color: #58A6FF;
+            margin-bottom: 0.5rem;
+            animation: slideIn 1.5s ease forwards;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #8B949E;
+            font-style: italic;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInText 1.8s ease forwards;
+        }
+
+        /* Button */
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #21262D; /* Dark button background */
+            color: #C9D1D9; /* Light text */
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #58A6FF; /* Light blue on hover */
+            color: #0D1117;
+            transform: scale(1.05);
+        }
+
+        /* Project Section */
+        .project-section {
+            margin-top: 3rem;
+            border-top: 1px solid #30363d;
+            padding-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 2.2s ease forwards;
+        }
+
+        .project-section h3 {
+            font-size: 2rem;
+            color: #58A6FF;
+            margin-bottom: 1rem;
+        }
+
+        .project-section .devlog-item {
+            margin-bottom: 1.5rem;
+            background-color: #161b22;
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-section .devlog-item:hover {
+            background-color: #21262d;
+            transform: scale(1.05);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .project-section .devlog-item h4 {
+            font-size: 1.6rem;
+            color: #58A6FF;
+            margin: 0;
+        }
+
+        .project-section .devlog-item p {
+            font-size: 1rem;
+            color: #8B949E;
+            margin: 0.5rem 0;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 1rem;
+            color: #8B949E;
+            opacity: 0;
+            animation: fadeIn 2.8s ease forwards;
+            padding-top: 2rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 2rem;
+        }
+
+        .page-control {
+            font-size: 1.5rem;
+            color: #58A6FF;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.3s;
+        }
+
+        .page-control:hover {
+            color: #C9D1D9;
+            transform: scale(1.1);
+        }
+
+        .page-input {
+            font-size: 1.2rem;
+            color: #58A6FF;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .page-input input[type="number"] {
+            width: 50px;
+            padding: 6px;
+            border: none;
+            text-align: center;
+            border-radius: 6px;
+            background-color: #21262D;
+            color: #58A6FF;
+            outline: none;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .page-input input[type="number"]:focus {
+            background-color: #30363d;
+        }
+
+        .page-input input[type="number"]::-webkit-outer-spin-button,
+        .page-input input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInText {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+        <!-- Navigation -->
+        <nav class="navbar">
+            <a href="index.html" class="logo"><i class="fas fa-star"></i> Ryo</a>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li class="dropdown">
+                    <a href="quantum.html"><i class="fas fa-atom"></i> Quantum</a>
+                    <div class="dropdown-content">
+                        <a href="devlogs/index.html"><i class="fas fa-pencil-alt"></i> Devlogs</a>
+                        <a href="commits/index.html"><i class="fas fa-code-branch"></i> Commits</a>
+                    </div>
+                </li>
+                <li class="contact-dropdown">
+                    <a href="#contact"><i class="fas fa-address-card"></i> Contact</a>
+                    <div class="dropdown-content">
+                        <div><i class="fab fa-discord"></i> jupiter.ryo</div>
+                        <a href="https://github.com/theryo12" target="_blank"><i class="fab fa-github"></i> github.com/theryo12</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+    <div class="container">
+        <!-- Introduction Section -->
+        <h1>Welcome to My Devlogs!</h1>
+        <h2>Track the progress of my projects and get a sneak peek behind the scenes.</h2>
+        
+        <!-- Latest Devlog Section -->
+        <div class="project-section">
+            <h3>Latest Devlog</h3>
+            <div id="latestDevlog" class="devlog-item"></div>
+        </div>
+
+        <!-- Separator -->
+        <hr style="border-color: #30363d; margin: 2rem 0;">
+
+        <!-- Random Devlog Section -->
+        <div class="project-section">
+            <h3>Random Devlog</h3>
+            <div id="randomDevlog" class="devlog-item"></div>
+        </div>
+
+        <!-- Separator -->
+        <hr style="border-color: #30363d; margin: 2rem 0;">
+
+        <!-- All Devlogs Section -->
+        <div class="project-section" id="allDevlogsSection">
+            <h3>All Devlogs</h3>
+            <div id="allDevlogs"></div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <span class="page-control" onclick="goToFirstPage()">
+                <i class="fas fa-angle-double-left"></i>
+            </span>
+            <span class="page-input" onclick="toggleInput()">
+                <span id="pageDisplay">...</span>
+                <input type="number" id="pageInput" min="1" max="" onchange="goToPage()" />
+            </span>
+            <span class="page-control" onclick="goToLastPage()">
+                <i class="fas fa-angle-double-right"></i>
+            </span>
+        </div>        
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Made with love and a lot of code by Ryo. 🌌</p>
+        </div>
+    </div>
+
+    <script>
+        let devlogs = [];
+        let currentPage = 1;
+        const devlogsPerPage = 5;
+
+        // Функция загрузки JSON
+        fetch('devlogs.json')
+            .then(response => response.json())
+            .then(data => {
+                devlogs = data.reverse(); 
+                displayDevlogs();
+                createPagination();
+            });
+
+        function displayDevlogs() {
+            const latestDevlog = devlogs[0]; 
+            const randomDevlog = devlogs[Math.floor(Math.random() * devlogs.length)];
+
+            // Latest Devlog
+            const latestElement = document.getElementById('latestDevlog');
+            latestElement.innerHTML = `
+                <h4>${latestDevlog.title}</h4>
+                <p>${latestDevlog.description}</p>
+                <a href="${latestDevlog.link}" class="button">Read More</a>
+            `;
+
+            // Random Devlog
+            const randomElement = document.getElementById('randomDevlog');
+            randomElement.innerHTML = `
+                <h4>${randomDevlog.title}</h4>
+                <p>${randomDevlog.description}</p>
+                <a href="${randomDevlog.link}" class="button">Read More</a>
+            `;
+
+            // All Devlogs
+            const allDevlogs = document.getElementById('allDevlogs');
+            const startIndex = (currentPage - 1) * devlogsPerPage;
+            const endIndex = Math.min(startIndex + devlogsPerPage, devlogs.length);
+            allDevlogs.innerHTML = ''; 
+            for (let i = startIndex; i < endIndex; i++) {
+                const devlog = devlogs[i];
+                allDevlogs.innerHTML += `
+                    <div class="devlog-item">
+                        <h4>${devlog.title}</h4>
+                        <p>${devlog.description}</p>
+                        <a href="${devlog.link}" class="button">Read More</a>
+                    </div>
+                `;
+            }
+        }
+
+        let lastScrollY = window.scrollY;
+        const navbar = document.querySelector('.navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY) {
+                navbar.classList.add('hidden'); // Hide navbar on scroll down
+            } else {
+                navbar.classList.remove('hidden'); // Show navbar on scroll up
+            }
+            lastScrollY = window.scrollY;
+        });
+
+        function createPagination() {
+            const totalPages = Math.ceil(devlogs.length / devlogsPerPage);
+            document.getElementById("pageInput").max = totalPages;
+
+            window.goToFirstPage = function () {
+                currentPage = 1;
+                displayDevlogs();
+                updatePageInput();
+            };
+
+            window.goToLastPage = function () {
+                currentPage = totalPages;
+                displayDevlogs();
+                updatePageInput();
+            };
+
+            window.goToPage = function () {
+                const pageInput = document.getElementById("pageInput");
+                let pageNum = parseInt(pageInput.value, 10);
+
+                if (pageNum >= 1 && pageNum <= totalPages) {
+                    currentPage = pageNum;
+                    displayDevlogs();
+                    toggleInput(); 
+                } else {
+                    pageInput.value = ""; 
+                }
+            };
+
+            function updatePageInput() {
+                document.getElementById("pageDisplay").innerText = currentPage;
+            }
+
+            window.toggleInput = function () {
+                const pageInput = document.getElementById("pageInput");
+                const pageDisplay = document.getElementById("pageDisplay");
+
+                if (pageInput.style.display === "none" || !pageInput.style.display) {
+                    pageDisplay.style.display = "none";
+                    pageInput.style.display = "inline-block";
+                    pageInput.focus();
+                } else {
+                    pageDisplay.style.display = "inline";
+                    pageInput.style.display = "none";
+                }
+            };
+
+            updatePageInput();
+        }
+
+
+    </script>
+</body>
+</html>

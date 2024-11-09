@@ -19,7 +19,7 @@
             padding: 0;
             font-family: var(--font-primary);
             color: var(--text-color);
-            background-color: var(--background-color); /* Убираем белый фон */
+            background-color: var(--background-color);
             overflow: hidden;
             position: relative;
             height: 100vh;
@@ -76,36 +76,48 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Функция для создания случайных абстрактных фигур
-        function createAbstractShape() {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            const size = Math.random() * 50 + 20; // Меньше, чтобы не было слишком крупных объектов
-            const opacity = Math.random() * 0.3 + 0.1; // Меньше прозрачности
-            const color = `rgba(100, 100, ${Math.random() * 150 + 100}, ${opacity})`; // Меньше контраста, более мягкие цвета
-
-            return { x, y, size, color };
+        // Генерация случайных цветов для фона
+        function generateRandomColor() {
+            const r = Math.floor(Math.random() * 100) + 100;  // Меньше контраста
+            const g = Math.floor(Math.random() * 100) + 100;
+            const b = Math.floor(Math.random() * 100) + 150;
+            return `rgba(${r}, ${g}, ${b}, 0.15)`;  // Очень мягкие цвета
         }
 
-        const shapes = [];
-        for (let i = 0; i < 50; i++) { // Больше фигур, чтобы не было чётких очертаний
-            shapes.push(createAbstractShape());
+        // Функция для создания органичного "шума"
+        function createNoise() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const imageData = ctx.createImageData(width, height);
+            const data = imageData.data;
+
+            // Заполняем данными для шума
+            for (let i = 0; i < data.length; i += 4) {
+                data[i] = Math.random() * 255;       // Red
+                data[i + 1] = Math.random() * 255;   // Green
+                data[i + 2] = Math.random() * 255;   // Blue
+                data[i + 3] = 30;                    // Прозрачность, чтобы это было приглушённым
+            }
+
+            // Рисуем шум
+            ctx.putImageData(imageData, 0, 0);
         }
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем канвас
 
-            // Обновляем и рисуем фигуры
-            shapes.forEach(shape => {
-                const distortion = Math.sin(Date.now() * 0.002 + shape.x) * 20;
-                const sizeChange = Math.sin(Date.now() * 0.001 + shape.y) * 10;
-
+            // Рисуем абстрактные элементы
+            for (let i = 0; i < 5; i++) {
+                ctx.fillStyle = generateRandomColor();
                 ctx.beginPath();
-                ctx.arc(shape.x + distortion, shape.y + distortion, shape.size + sizeChange, 0, Math.PI * 2);
-                ctx.fillStyle = shape.color;
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const size = Math.random() * 150 + 50; // Плавные абстрактные формы
+                ctx.arc(x, y, size, 0, Math.PI * 2);
                 ctx.fill();
-            });
+            }
 
+            createNoise();  // Наложение шума для органичности
             requestAnimationFrame(animate);
         }
 

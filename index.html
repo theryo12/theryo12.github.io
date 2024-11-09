@@ -76,48 +76,38 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // Генерация случайных цветов для фона
-        function generateRandomColor() {
-            const r = Math.floor(Math.random() * 100) + 100;  // Меньше контраста
-            const g = Math.floor(Math.random() * 100) + 100;
-            const b = Math.floor(Math.random() * 100) + 150;
-            return `rgba(${r}, ${g}, ${b}, 0.15)`;  // Очень мягкие цвета
+        let color1 = [36, 52, 106]; // темный синий
+        let color2 = [46, 73, 124]; // синий средний
+
+        // Функция для плавных переходов цветов
+        function interpolateColor(color1, color2, factor) {
+            return color1.map((value, index) => Math.round(value + (color2[index] - value) * factor));
         }
 
-        // Функция для создания органичного "шума"
-        function createNoise() {
-            const width = canvas.width;
-            const height = canvas.height;
-            const imageData = ctx.createImageData(width, height);
-            const data = imageData.data;
+        // Функция для создания абстрактных плавных переходов
+        function createAbstractBackground() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем канвас
 
-            // Заполняем данными для шума
-            for (let i = 0; i < data.length; i += 4) {
-                data[i] = Math.random() * 255;       // Red
-                data[i + 1] = Math.random() * 255;   // Green
-                data[i + 2] = Math.random() * 255;   // Blue
-                data[i + 3] = 30;                    // Прозрачность, чтобы это было приглушённым
+            // Получаем текущие цвета с плавным переходом
+            const factor = (Math.sin(Date.now() / 2000) + 1) / 2; // Плавное изменение цвета
+            const currentColor = interpolateColor(color1, color2, factor);
+
+            ctx.fillStyle = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
+
+            // Рисуем плавно меняющийся абстрактный фон
+            ctx.globalAlpha = 0.2; // Сделаем его полупрозрачным, чтобы не было резких фигур
+            ctx.beginPath();
+            for (let i = 0; i < 10; i++) {
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                let radius = Math.random() * 300 + 150; // Больше радиус для плавных переходов
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
             }
-
-            // Рисуем шум
-            ctx.putImageData(imageData, 0, 0);
+            ctx.fill();
         }
 
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем канвас
-
-            // Рисуем абстрактные элементы
-            for (let i = 0; i < 5; i++) {
-                ctx.fillStyle = generateRandomColor();
-                ctx.beginPath();
-                const x = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-                const size = Math.random() * 150 + 50; // Плавные абстрактные формы
-                ctx.arc(x, y, size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            createNoise();  // Наложение шума для органичности
+            createAbstractBackground();
             requestAnimationFrame(animate);
         }
 

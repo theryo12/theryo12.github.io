@@ -4,17 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой сайт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --background-color: #1e1e2e; 
-            --primary-color: #4a90e2;
-            --text-color: #dcdcdc;
+            --background-color: #1e1e2e;
+            --primary-color: #4a90e2; 
+            --text-color: #dcdcdc; 
+            
+            --font-primary: 'Roboto', sans-serif; 
+            --font-heading: 'Poppins', sans-serif; 
         }
 
+        /* Основные стили */
         body {
             background-color: var(--background-color);
             color: var(--text-color);
-            font-family: Arial, sans-serif;
+            font-family: var(--font-primary); 
             margin: 0;
             padding: 0;
             display: flex;
@@ -24,12 +29,23 @@
         }
 
         h1 {
-            font-size: 2rem;
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 600;
             color: var(--primary-color);
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-color);
         }
     </style>
 </head>
 <body>
-    <h1>Добро пожаловать на мой сайт!</h1>
+    <div>
+        <h1>Добро пожаловать на мой сайт!</h1>
+        <p>Это пример сайта с тёмной темой и современными шрифтами, использующими переменные.</p>
+    </div>
 </body>
 </html>

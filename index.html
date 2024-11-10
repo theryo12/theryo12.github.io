@@ -10,7 +10,7 @@
     <style>
         /* Global Styles */
         body {
-            background-color: #0D1117;
+            background: linear-gradient(135deg, #0D1117, #161b22);
             color: #C9D1D9;
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -19,7 +19,8 @@
 
         /* Navigation Bar */
         .navbar {
-            background-color: #161b22;
+            backdrop-filter: blur(10px);
+            background-color: rgba(22, 27, 34, 0.8);
             padding: 1rem 2rem;
             display: flex;
             justify-content: flex-end;
@@ -70,12 +71,13 @@
             gap: 0.4rem;
         }
 
+
         .navbar a:hover {
             color: #58A6FF;
+            text-shadow: 0px 0px 8px rgba(88, 166, 255, 0.8);
         }
-
         /* Dropdown Menu */
-        .navbar .dropdown {
+        .navbar .dropdown  {
             position: relative;
         }
 
@@ -115,6 +117,10 @@
             position: relative;
         }
 
+        .navbar .dropdown, .contact-dropdown {
+            cursor: pointer;
+        }
+
         .contact-dropdown .dropdown-content {
             display: none;
             position: absolute;
@@ -149,7 +155,8 @@
         }
 
         .contact-dropdown .dropdown-content a:hover {
-            color: #58A6FF;
+            color: white; 
+            background-color: #58A6FF;
         }
 
         /* Container */
@@ -163,6 +170,12 @@
         }
 
         /* Header */
+
+        h1, h2, h3 {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+        }
+
         h1 {
             font-size: 3rem;
             color: #58A6FF;
@@ -182,27 +195,11 @@
         /* Main Text */
         p {
             font-size: 1.2rem;
-            line-height: 1.6;
+            line-height: 1.8;
+            font-weight: 300;
             margin-bottom: 1.5rem;
             opacity: 0;
             animation: fadeInText 2s ease forwards;
-        }
-
-        /* Button */
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #238636;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 1rem;
-        }
-
-        .button:hover {
-            background-color: #2ea043;
-            transform: scale(1.05);
         }
 
         /* Project Section */
@@ -244,6 +241,11 @@
             animation: fadeIn 2.4s ease forwards;
             transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
+        }
+
+        .subcategory, .contact-dropdown .dropdown-content {
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         .subcategory h4 {
@@ -331,10 +333,8 @@
 
         /* Animations */
         @keyframes fadeIn {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes fadeInDropdown {

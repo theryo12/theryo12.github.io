@@ -18,8 +18,8 @@
             line-height: 1.6;
         }
 
-                /* Navigation Bar */
-                .navbar {
+         /* Navigation Bar */
+        .navbar {
             background-color: #161b22;
             padding: 1rem 2rem;
             display: flex;
@@ -410,8 +410,7 @@
         let currentPage = 1;
         const devlogsPerPage = 5;
 
-        // Функция загрузки JSON
-        fetch('devlogs.json')
+        fetch('devlogs/devlogs.json')
             .then(response => response.json())
             .then(data => {
                 devlogs = data.reverse(); 

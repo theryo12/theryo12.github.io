@@ -1,4 +1,5 @@
 [
+    "_comment": "Devlogs are temporary stored in json. Probably will be stored in a database later."
     {
         "title": "Devlog #1 - Project Kickoff",
         "description": "In this devlog, I talk about the initial steps of the project and my goals for the upcoming months."

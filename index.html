@@ -152,6 +152,100 @@
             animation: fadeIn 2.8s ease forwards;
         }
 
+        /* Global Styles for Giscus Comments */
+        .giscus {
+            background-color: #161b22; /* Dark background for the widget */
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Light shadow */
+            color: #C9D1D9; /* Light text */
+        }
+
+        /* Comment input field */
+        .giscus .giscus-comment-body textarea {
+            width: 100%;
+            background-color: #21262d; /* Dark background for input field */
+            border: 1px solid #30363d; /* Light border */
+            color: #C9D1D9; /* Light text color */
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            resize: vertical; /* Allow vertical resizing */
+            transition: background-color 0.3s ease;
+        }
+
+        .giscus .giscus-comment-body textarea:focus {
+            background-color: #0D1117; /* Dark blue background when focused */
+            border-color: #58A6FF; /* Blue border color on focus */
+            outline: none;
+        }
+
+        /* Submit button */
+        .giscus .giscus-comment-body button {
+            background-color: #58A6FF; /* Blue button background */
+            color: #0D1117; /* Dark text on the button */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .giscus .giscus-comment-body button:hover {
+            background-color: #0D1117; /* Dark blue background on hover */
+            color: #58A6FF; /* Blue text color on hover */
+        }
+
+        /* User avatar */
+        .giscus .giscus-comment-author img {
+            border-radius: 50%; /* Round avatar */
+            width: 30px;
+            height: 30px;
+            margin-right: 0.8rem;
+        }
+
+        /* Style for comments */
+        .giscus .giscus-comment {
+            background-color: #21262d; /* Dark background for comments */
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            color: #C9D1D9;
+            font-size: 1rem;
+        }
+
+        .giscus .giscus-comment .giscus-comment-author {
+            font-weight: 600;
+            color: #58A6FF; /* Blue color for author name */
+        }
+
+        /* Comment body style */
+        .giscus .giscus-comment .giscus-comment-body {
+            margin-top: 0.5rem;
+            font-weight: 300;
+            color: #8B949E; /* Lighter color for comment text */
+        }
+
+        /* Style for comment body text */
+        .giscus .giscus-comment-body {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Links in comments */
+        .giscus .giscus-comment-body a {
+            color: #58A6FF;
+            text-decoration: none;
+        }
+
+        .giscus .giscus-comment-body a:hover {
+            text-decoration: underline;
+        }
+
         /* Animations */
         @keyframes slideIn {
             from {
@@ -239,10 +333,36 @@
             </div>
         </div>
 
+        <!-- Separator -->
+        <hr style="border-color: #ffffff1c; margin: 2rem 0;">
+
+        <!-- Comments -->
+        <div class="comments-section">
+            <h3>What others think about me...</h3>
+            <div class="giscus">
+                <script src="https://giscus.app/client.js"
+                data-repo="theryo12/theryo12.github.io"
+                data-repo-id="R_kgDONM3eRQ"
+                data-category="General"
+                data-category-id="DIC_kwDONM3eRc4CkJAn"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="top"
+                data-theme="dark"
+                data-lang="en"
+                data-loading="lazy"
+                crossorigin="anonymous"
+                async>
+            </script>
+            </div> 
+        </div>
+
         <!-- Footer -->
         <div class="footer">
             <p>Made with love and a lot of code by Ryo. 🌌</p>
-        </div>
+         </div>
     </div>
 
     <script>
